@@ -1,21 +1,36 @@
 import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { useState } from 'react';
+import { View} from 'react-native';
+import AppLoading from 'expo-app-loading';
+import * as Font from 'expo-font';
+import Todoapp from './app/ToDoAppFiles/Todoapp';
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
-}
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
+const getFonts=() => Font.loadAsync({
+  'ubuntu-bold': require('./assets/fonts/Ubuntu-Bold.ttf')
+  
 });
+export default function App() {
+  
+    
+     
+    const[ fontsLoaded, setfontsLoaded]= useState(false);
+
+    if(fontsLoaded){
+  
+      return (
+       
+        <Todoapp/>
+      );
+    }
+    else{
+      return (
+      <AppLoading 
+        startAsync= {getFonts}
+        onFinish= {()=>setfontsLoaded(true)}
+        onError={console.warn}
+      />
+      )
+    }
+      }
+  
+
